@@ -16,10 +16,12 @@ class _AddAttractionState extends State<AddAttraction> {
       appBar: AppBar(
         title: const Text('Add Attraction'),
       ),
-      body: ListView(
-        children: const [
-          MyCustomForm()
-        ],
+      body: SafeArea(
+        child: ListView(
+          children: const [
+            MyCustomForm()
+          ],
+        ),
       )
     );
   }
