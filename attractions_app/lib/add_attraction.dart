@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'custom_form.dart';
 //Big Coder gang
 
 class AddAttraction extends StatefulWidget {
@@ -15,8 +16,10 @@ class _AddAttractionState extends State<AddAttraction> {
       appBar: AppBar(
         title: const Text('Add Attraction'),
       ),
-      body:const Center(
-        child: Text('Add Attraction')
+      body: ListView(
+        children: const [
+          MyCustomForm()
+        ],
       )
     );
   }

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Lab Six',
+      title: 'Lab Seven',
       debugShowCheckedModeBanner: false,
       home: HomeScreen()
     );
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lab 6 - Brayden Klemens'),
+        title: const Text('Lab 7 - Brayden Klemens'),
         actions: [
           IconButton(
             onPressed: () {
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAttraction()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAttraction())).then((_) => setState(() {}));
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context: context,
     builder: (context) => StatefulBuilder(
       builder: (context, setState) => WillPopScope(
-        onWillPop: () { //for when users click off screen it resets
+        onWillPop: () { //for when users click off screen it resets the filter values to false
           for(int i = 0; i < filters.length; i++){
             filters[i]['isTapped'] = false;
           }
@@ -101,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               child: const Text('Apply', style: TextStyle(fontSize: 18)),
               onPressed: () {
+                //Filters update thier state, but setState here refreshes the changes to thier array values
                 Navigator.of(context).pop();
                 this.setState(() {});
               },
@@ -111,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Wrap(
               children: [ 
                 for(int i = 0; i < filters.length; i++)
+                  //returned values from Filter update the array of filters values
                   Filter(category: filters[i]['name'], tapped: filters[i]['isTapped'], func: (value) => setState(() => filters[i]['isTapped'] = value))
               ],
             ),
@@ -222,6 +224,7 @@ class _FilterState extends State<Filter> {
         child: GestureDetector(
           onTap:() {
             setState(() {
+              //return the new value of the filter
               tapped = !tapped;
               func(tapped);
             });
