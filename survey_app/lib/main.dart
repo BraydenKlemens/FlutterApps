@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'history_screen.dart';
+import 'home_screen.dart';
+import 'profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,19 +18,19 @@ class _MyAppState extends State<MyApp> {
 
   List<Widget> screens = <Widget>[
     //screen objects placed here
+    const ProfileScreen(name: 'Brayden'),
     const HomeScreen(),
-    const Text('hello'),
-    const Text('hello2')
+    const HistoryScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(), // standard dark theme
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       title: 'Survey Hub',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         body: IndexedStack(
           index: currentIndex,
@@ -37,47 +40,25 @@ class _MyAppState extends State<MyApp> {
           currentIndex: currentIndex,
           onTap: (index) => setState(() => currentIndex = index),
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
-          selectedItemColor: Colors.white,
-          items: const <BottomNavigationBarItem>[
+          //GOOGLE: 51,55,58
+          //Discord: 54, 57, 64
+          backgroundColor: const Color.fromARGB(255, 26, 25, 25),
+          selectedItemColor: Colors.cyan,
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.lock),
-              label: 'Extra',
+              icon: (currentIndex == 0) ? const Icon(Icons.account_circle, size: 30): const Icon(Icons.account_circle_outlined, size: 30),
+              label: 'Profile',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.extension),
+              icon: (currentIndex == 1) ? const Icon(Icons.description, size: 30) : const Icon(Icons.description_outlined, size: 30),
               label: 'Surveys',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.group),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.history, size: 30),
               label: 'History',
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({ Key? key }) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Available Surveys'),
-        actions: [
-          IconButton(
-            onPressed: () {
-            },
-            icon: const Icon(Icons.filter_alt))
-        ],
       ),
     );
   }
