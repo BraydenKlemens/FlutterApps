@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SurveyTool extends StatefulWidget {
-  const SurveyTool({ Key? key }) : super(key: key);
+  const SurveyTool({ Key? key, required this.survey_url}) : super(key: key);
+  final String survey_url;
   @override
   _SurveyToolState createState() => _SurveyToolState();
 }
@@ -29,7 +30,6 @@ class _SurveyToolState extends State<SurveyTool> {
         onWebViewCreated: (controller) {
           this.controller = controller;
         },
-        //https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk
       )
     );
   }

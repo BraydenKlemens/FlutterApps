@@ -53,7 +53,7 @@ class _CustomListTileState extends State<CustomListTile> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const SurveyTool()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const SurveyTool(survey_url: '',)));
             setState(() {
               isSelected = !isSelected;
             });
