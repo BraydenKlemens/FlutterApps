@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   List<Widget> screens = <Widget>[
     //screen objects placed here
