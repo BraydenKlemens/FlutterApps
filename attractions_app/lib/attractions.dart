@@ -20,7 +20,7 @@ List attractions = [
       ],
       "address": "116 Gordon St, Guelph",
       "imageURL":
-          "https://www.likealocalguide.com/media/cache/ee/4b/ee4be87780b1d213a51cb0f553cdff5d.jpg",
+          "https://i.cbc.ca/1.3156496.1437135017!/fileImage/httpImage/the-boathouse-and-speed-river-paddling.jpg",
       "isFree": false,
       "description": "Tea room and casual restaurant located in Guelph, Ontario. Perfect for breakfast or lunch. Canoe rentals located on the side of the Speed River.",
     },
