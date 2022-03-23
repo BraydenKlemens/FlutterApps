@@ -21,8 +21,6 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
     });
   }
 
-
-
   Map<String, bool> categories = {
     "Picnic": true,
     'Playground':true,
@@ -37,6 +35,7 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
   };
 
   final List<Attraction> attractions = GuelphAttractions.guelphAttractions;
+  final List<Attraction> scheduled = [];
 
   void updateCategories(Map<String, bool> newCategories) {
     setState(() {

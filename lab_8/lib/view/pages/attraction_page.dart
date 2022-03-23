@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:lab_8/core/models/schedule_provider.dart';
 import '../../core/models/attraction.dart';
+import 'package:provider/provider.dart';
+
 
 class AttractionPage extends StatelessWidget {
   Attraction attraction;
@@ -16,13 +18,14 @@ class AttractionPage extends StatelessWidget {
         children: [
           _backgroundImage(),
           _buildBackdrop(),
-          _buildAttractionContent(),
+          _buildAttractionContent(context),
         ],
       ),
     );
   }
 
-  Widget _buildAttractionContent() {
+  Widget _buildAttractionContent(BuildContext context) {
+
     return  SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -58,8 +61,8 @@ class AttractionPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //Here is where I will use provider for the new task
-                  //It should just send data to the schedule page
+                  Provider.of<ScheduleProvider>(context, listen: false)
+                    .addAttraction(attraction);
                 },
                 child: Text("Add"),
               ),
