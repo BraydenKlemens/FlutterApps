@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './view/pages/bottom_tab_bar_scaffold.dart';
 import 'package:provider/provider.dart';
 import './core/models/schedule_provider.dart';
+import 'core/models/attraction_provider.dart';
 
 
 void main() => runApp(MyApp());
@@ -20,6 +21,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ScheduleProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AttractionProvider(),
         ),
       ],
       child: MaterialApp(

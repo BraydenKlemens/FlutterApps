@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lab_8/core/models/attraction_provider.dart';
+import 'package:provider/provider.dart';
 import '../components/filter_dialog.dart';
 import './add_attraction.dart';
 import './attraction_list_page.dart';
@@ -21,47 +23,20 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
     });
   }
 
-  Map<String, bool> categories = {
-    "Picnic": true,
-    'Playground':true,
-    'hiking':true,
-    'Boating': true,
-    'Ice-Cream':true,
-    'Tea': true,
-    'Flowers': true,
-    'Swimming': true,
-    'Camping': true,
-    'Education':true,
-  };
-
-  final List<Attraction> attractions = GuelphAttractions.guelphAttractions;
-  final List<Attraction> scheduled = [];
-
-  void updateCategories(Map<String, bool> newCategories) {
-    setState(() {
-      categories = newCategories;
-    });
-  }
-
-  void addAttraction(Attraction attraction) {
-    setState(() {
-      attractions.add(attraction);
-    });
-  }
-
   void filterCategories(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) {
           return FilterDialog(
-            categories: categories,
-            updateCategories: updateCategories,
+            categories: Provider.of<AttractionProvider>(context).categories,
+            updateCategories: Provider.of<AttractionProvider>(context).updateCategories
           );
         });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Lab 8 - Brayden Klemens"),
@@ -76,7 +51,7 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => AddAttraction(
-              addAttraction: addAttraction,
+              addAttraction: Provider.of<AttractionProvider>(context).addAttraction
             )),
           );
         },
@@ -84,8 +59,8 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
       ),
       body: _selectedIndex == 0
           ? AttractionListPage(
-            attractions: attractions,
-            categoriesToShow: categories,
+            attractions: Provider.of<AttractionProvider>(context).attractions,
+            categoriesToShow: Provider.of<AttractionProvider>(context).categories,
           )
           : AttractionsSchedulePage(),
       bottomNavigationBar: _buildBottomNavBar(),

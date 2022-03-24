@@ -5,8 +5,6 @@ class ScheduleProvider extends ChangeNotifier {
 
   List<Attraction> schedules = [];
 
-  List<Attraction> get _schedules => schedules;
-
   void addAttraction(Attraction attraction) {
     schedules.add(attraction);
     notifyListeners();
