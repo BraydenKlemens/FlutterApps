@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Attraction {
   final String title;
   final String address;

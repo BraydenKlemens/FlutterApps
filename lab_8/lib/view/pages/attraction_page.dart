@@ -11,7 +11,7 @@ class AttractionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Schedule Attraction"),
+        title: const Text("Schedule Attraction"),
         elevation: 0,
       ),
       body: Stack(
@@ -35,28 +35,28 @@ class AttractionPage extends StatelessWidget {
               Text(
                 attraction.title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 40,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               _buildAttractionCategories(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               _buildAttractionDescription(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               _buildAttractionAddress(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               _buildAttractionCost(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
@@ -64,7 +64,7 @@ class AttractionPage extends StatelessWidget {
                   Provider.of<ScheduleProvider>(context, listen: false)
                     .addAttraction(attraction);
                 },
-                child: Text("Add"),
+                child: const Text("Add"),
               ),
             ],
           ),
@@ -75,7 +75,7 @@ class AttractionPage extends StatelessWidget {
   Column _buildAttractionCost() {
     return Column(
       children: [
-        Text(
+        const Text(
           "Cost",
           style: TextStyle(
             color: Colors.white,
@@ -85,7 +85,7 @@ class AttractionPage extends StatelessWidget {
         ),
         Text(
           attraction.isFree ? "Free" : "Not Free",
-          style: TextStyle(
+          style: const  TextStyle(
             fontSize: 18,
             color: Colors.white,
           ),
@@ -97,7 +97,7 @@ class AttractionPage extends StatelessWidget {
   Column _buildAttractionAddress() {
     return Column(
       children: [
-        Text(
+        const Text(
           "Address",
           style: TextStyle(
             color: Colors.white,
@@ -107,7 +107,7 @@ class AttractionPage extends StatelessWidget {
         ),
         Text(
           attraction.address,
-          style: TextStyle(
+          style:const  TextStyle(
             fontSize: 18,
             color: Colors.white,
           ),
@@ -119,7 +119,7 @@ class AttractionPage extends StatelessWidget {
   Column _buildAttractionDescription() {
     return Column(
       children: [
-        Text(
+        const Text(
           "Description",
           style: TextStyle(
             color: Colors.white,
@@ -130,7 +130,7 @@ class AttractionPage extends StatelessWidget {
         Text(
           attraction.description,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, color: Colors.white),
+          style: const TextStyle(fontSize: 18, color: Colors.white),
         ),
       ],
     );
@@ -139,7 +139,7 @@ class AttractionPage extends StatelessWidget {
   Column _buildAttractionCategories() {
     return Column(
       children: [
-        Text(
+        const Text(
           "Categories",
           style: TextStyle(
             color: Colors.white,
@@ -156,7 +156,7 @@ class AttractionPage extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
                     attraction.categories[i],
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
@@ -168,7 +168,7 @@ class AttractionPage extends StatelessWidget {
 
   Widget _buildBackdrop() {
     return Container(
-      color: Color.fromRGBO(0, 0, 0, 0.7),
+      color:const Color.fromRGBO(0, 0, 0, 0.7),
       width: double.infinity,
     );
   }

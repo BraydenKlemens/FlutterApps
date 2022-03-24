@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/models/attraction.dart';
-import '../../core/models/guelph_attractions.dart';
 import '../components/attraction_card.dart';
 
 class AttractionListPage extends StatelessWidget {

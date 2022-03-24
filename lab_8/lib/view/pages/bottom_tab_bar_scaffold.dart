@@ -6,8 +6,6 @@ import './add_attraction.dart';
 import './attraction_list_page.dart';
 import './attraction_schedule_page.dart';
 
-import '../../core/models/attraction.dart';
-import '../../core/models/guelph_attractions.dart';
 
 class BottomTabBarScaffold extends StatefulWidget {
   @override
@@ -28,8 +26,7 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
         context: context,
         builder: (context) {
           return FilterDialog(
-            categories: Provider.of<AttractionProvider>(context).categories,
-            updateCategories: Provider.of<AttractionProvider>(context).updateCategories
+            categories: Provider.of<AttractionProvider>(context).categories
           );
         });
   }
@@ -39,11 +36,11 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lab 8 - Brayden Klemens"),
+        title: const Text("Lab 8 - Brayden Klemens"),
         actions: [
           IconButton(
             onPressed: () => filterCategories(context),
-            icon: Icon(Icons.filter_list_alt),
+            icon: const Icon(Icons.filter_list_alt),
           ),
         ],
       ),
@@ -55,7 +52,7 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
             )),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: _selectedIndex == 0
           ? AttractionListPage(
@@ -69,7 +66,7 @@ class _BottomTabBarScaffoldState extends State<BottomTabBarScaffold> {
 
   BottomNavigationBar _buildBottomNavBar() {
     return BottomNavigationBar(
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.list),
           label: "Attractions",

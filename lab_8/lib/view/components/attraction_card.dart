@@ -39,7 +39,7 @@ class AttractionCard extends StatelessWidget {
       children: [
         Text(
           attractions[index].title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

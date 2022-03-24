@@ -9,7 +9,7 @@ class AttractionProvider extends ChangeNotifier {
   Map<String, bool> categories = {
     "Picnic": true,
     'Playground':true,
-    'hiking':true,
+    'Hiking':true,
     'Boating': true,
     'Ice-Cream':true,
     'Tea': true,
@@ -19,14 +19,33 @@ class AttractionProvider extends ChangeNotifier {
     'Education':true,
   };
 
+  Map<String, bool> categories_copy = {
+    "Picnic": true,
+    'Playground':true,
+    'Hiking':true,
+    'Boating': true,
+    'Ice-Cream':true,
+    'Tea': true,
+    'Flowers': true,
+    'Swimming': true,
+    'Camping': true,
+    'Education':true,
+  };
 
-  void addAttraction(Attraction attraction) {
-    attractions.add(attraction);
+  void update(){
+    categories_copy.forEach((key, value) { 
+     categories[key] = value;
+    });
     notifyListeners();
   }
 
-  void updateCategories(Map<String, bool> newCategories) {
-    categories = newCategories;
+  void updateSelection(String key) {
+    categories_copy[key] = !(categories_copy[key] ?? false);
+    notifyListeners();
+  }
+
+  void addAttraction(Attraction attraction) {
+    attractions.add(attraction);
     notifyListeners();
   }
 

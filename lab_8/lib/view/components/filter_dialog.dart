@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:lab_8/core/models/attraction_provider.dart';
+import 'package:provider/provider.dart';
 
 class FilterDialog extends StatefulWidget {
   const FilterDialog({
     Key? key,
     required this.categories,
-    required this.updateCategories,
   }) : super(key: key);
 
   final Map<String, bool> categories;
-  final Function(Map<String, bool>) updateCategories;
 
   @override
   State<FilterDialog> createState() => _FilterDialogState();
 }
 
 class _FilterDialogState extends State<FilterDialog> {
-  Map<String, bool> categories_copy = {};
-
-  @override
-  void initState() {
-    super.initState();
-
-   widget.categories.forEach((key, value) { 
-     categories_copy[key] = value;
-   });
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +28,7 @@ class _FilterDialogState extends State<FilterDialog> {
         minSize = height;
       }
     return AlertDialog(
-      title: Text("Adjust Filters"),
+      title: const Text("Adjust Filters"),
       content: Container(
         width: minSize,
         child: Column(
@@ -47,7 +36,7 @@ class _FilterDialogState extends State<FilterDialog> {
           children: [
             Wrap(
               children: [
-                for(var key in categories_copy.keys)
+                for(var key in widget.categories.keys)
                   _buildCategoryCard(key)
                   
               ],
@@ -59,7 +48,7 @@ class _FilterDialogState extends State<FilterDialog> {
         TextButton(
           child: const Text('Apply'),
           onPressed: () {
-            widget.updateCategories(categories_copy);
+            Provider.of<AttractionProvider>(context, listen: false).update();
             Navigator.of(context).pop();
           },
         ),
@@ -70,23 +59,21 @@ class _FilterDialogState extends State<FilterDialog> {
   Widget _buildCategoryCard(String category) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          categories_copy[category] = !(categories_copy[category] ?? false);
-        });
+        Provider.of<AttractionProvider>(context, listen: false).updateSelection(category);
       },
       child: Stack(
         alignment: Alignment.topRight,
         children: [
           Card(
             color:
-          (categories_copy[category] ?? false) ? Colors.grey[300] : Colors.white,
+          (Provider.of<AttractionProvider>(context).categories_copy[category] ?? false) ? Colors.grey[300] : Colors.white,
             child: Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Text(category),
             ),
           ),
-          if (categories_copy[category] ?? false)
-            Icon(
+          if (Provider.of<AttractionProvider>(context).categories_copy[category] ?? false)
+            const Icon(
               Icons.check_circle,
               size: 12,
             ),

@@ -22,7 +22,7 @@ class _AddAttractionState extends State<AddAttraction> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Attraction"),
+        title: const Text("Add Attraction"),
       ),
       body: SafeArea(
         child: Form(
@@ -56,7 +56,7 @@ class _AddAttractionState extends State<AddAttraction> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
             ),
@@ -81,7 +81,7 @@ class _AddAttractionState extends State<AddAttraction> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Description",
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _AddAttractionState extends State<AddAttraction> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Is Free",
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -157,7 +157,7 @@ class _AddAttractionState extends State<AddAttraction> {
               );
             }
           },
-          child: Text("Create"),
+          child: const Text("Create"),
         ),
       ),
     );
