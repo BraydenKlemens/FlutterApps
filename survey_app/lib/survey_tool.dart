@@ -26,9 +26,12 @@ class _SurveyToolState extends State<SurveyTool> {
       ),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: 'https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk',
+        initialUrl: widget.survey_url,
         onWebViewCreated: (controller) {
           this.controller = controller;
+        },
+        onPageFinished: (String url){
+          print(url);
         },
       )
     );
