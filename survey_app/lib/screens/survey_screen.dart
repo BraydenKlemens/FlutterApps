@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SurveyTool extends StatefulWidget {
-  const SurveyTool({ Key? key, required this.survey_url}) : super(key: key);
-  final String survey_url;
+  const SurveyTool({ Key? key, required this.surveyUrl}) : super(key: key);
+  final String surveyUrl;
   @override
   _SurveyToolState createState() => _SurveyToolState();
 }
@@ -26,12 +26,15 @@ class _SurveyToolState extends State<SurveyTool> {
       ),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: widget.survey_url,
+        initialUrl: widget.surveyUrl,
         onWebViewCreated: (controller) {
           this.controller = controller;
         },
-        onPageFinished: (String url){
-          print(url);
+        onPageFinished: (String currentPage){
+          //This means the survey has finished and we can update the state
+          if(widget.surveyUrl == currentPage){
+            //update providers
+          }
         },
       )
     );

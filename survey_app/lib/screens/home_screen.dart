@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'survey_tool.dart';
+import 'package:provider/provider.dart';
+import '../providers/app_provider.dart';
+import 'survey_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -45,8 +47,9 @@ class _CustomListTileState extends State<CustomListTile> {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
+        elevation: 5,
         color: Colors.grey[700],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -55,31 +58,21 @@ class _CustomListTileState extends State<CustomListTile> {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => const SurveyTool(
-                survey_url: 'https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk')));
-            setState(() {
-              isSelected = !isSelected;
-            });
+                surveyUrl: 'https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk'
+              )
+            ));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (!isSelected)
-                IconButton(
-                  icon: const Icon(Icons.circle_outlined, size: 30, color: Colors.cyan),
-                  onPressed: () {
-                    setState(() {
-                      isSelected = !isSelected;
-                    });
-                  },
+              (!isSelected) 
+                ? const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.circle_outlined, size: 30, color: Colors.cyan),
                 )
-              else
-                IconButton(
-                  icon: const Icon(Icons.check_circle, size: 30, color: Colors.cyan),
-                  onPressed: () {
-                    setState(() {
-                      isSelected = !isSelected;
-                    });
-                  },
+                : const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.check_circle, size: 30, color: Colors.cyan),
                 ),
               const Text('Survey 1', style: TextStyle(fontSize: 20)),
               const Padding(
