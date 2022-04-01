@@ -34,7 +34,7 @@ class _AppNavigationState extends State<AppNavigation> {
         //GOOGLE: 51,55,58
         //Discord: 54, 57, 64
         backgroundColor: const Color.fromARGB(255, 26, 25, 25),
-        selectedItemColor: Colors.cyan,
+        selectedItemColor: Colors.blue,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: (currentIndex == 0) ? const Icon(Icons.account_circle, size: 30): const Icon(Icons.account_circle_outlined, size: 30),

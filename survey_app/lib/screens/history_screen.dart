@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/app_provider.dart';
-import 'home_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({ Key? key }) : super(key: key);
@@ -26,8 +25,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
             return ListView(
               children: [
                 for(int i = 0; i < completedsurveys.length; i++)
-                  ListTile(
-                    title: Text(completedsurveys[i].name)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.check_circle),
+                      title: Text(completedsurveys[i].name, style: const TextStyle(fontSize: 20)),
+                      subtitle: Text(completedsurveys[i].date.toString().substring(0,19), style: const TextStyle(fontSize: 18)),
+                      tileColor: Colors.blue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))
+                    ),
                   )
               ],
             );

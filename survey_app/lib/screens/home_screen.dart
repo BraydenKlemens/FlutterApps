@@ -89,11 +89,11 @@ class _CustomListTileState extends State<CustomListTile> {
               (!widget.survey.isCompleted) 
                 ? const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.circle_outlined, size: 30, color: Colors.cyan),
+                  child: Icon(Icons.circle_outlined, size: 30, color: Colors.blue),
                 )
                 : const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.check_circle, size: 30, color: Colors.cyan),
+                  child: Icon(Icons.check_circle, size: 30, color: Colors.blue),
                 ),
               Text(widget.survey.name, style: const TextStyle(fontSize: 20)),
               const Padding(
