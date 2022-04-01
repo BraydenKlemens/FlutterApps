@@ -11,8 +11,14 @@ class AppProvider extends ChangeNotifier {
 
   final List<Survey> surveys = MySurveys.surveys;
 
-  void updateSurveys(){
-    
+  void completeSurvey(int index){
+    surveys[index].isCompleted = true;
+    notifyListeners();
+  }
+
+  void addSurvey(Survey survey){
+    surveys.add(survey);
+    notifyListeners();
   }
 
 }

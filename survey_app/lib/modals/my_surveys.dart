@@ -11,7 +11,7 @@ class MySurveys {
     Survey(
       name: 'Fitness',
       url: 'https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk',
-      isCompleted: false
+      isCompleted: false,
     ),
     Survey(
       name: 'screen time',

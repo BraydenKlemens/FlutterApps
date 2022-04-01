@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../modals/survey.dart';
 import '../providers/app_provider.dart';
 import 'survey_screen.dart';
 
@@ -20,21 +21,39 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.filter_alt))
+            icon: const Icon(Icons.filter_alt)
+          )
         ],
       ),
-      body: ListView(
-        children: [
-          for(int i = 0; i < 6; i++)
-            const CustomListTile()
-        ],
+      body: Consumer<AppProvider>(
+        builder: (context, appState, child) {
+          var surveys = appState.surveys;
+          if(surveys.isNotEmpty){
+            return ListView(
+              children: [
+                for(int i = 0; i < surveys.length; i++)
+                  CustomListTile(survey: surveys[i], index: i)
+              ],
+            );
+          }else{
+            return const Center(child: Text('NO SURVEYS TO COMPLETE', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
+          }
+        },
       )
     );
   }
 }
 
 class CustomListTile extends StatefulWidget {
-  const CustomListTile({ Key? key}) : super(key: key);
+  
+  final Survey survey;
+  final int index;
+
+  const CustomListTile({
+    Key? key,
+    required this.survey,
+    required this.index,
+  }) : super(key: key);
 
   @override
   State<CustomListTile> createState() => _CustomListTileState();
@@ -57,15 +76,16 @@ class _CustomListTileState extends State<CustomListTile> {
         child: InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
-              builder: (context) => const SurveyTool(
-                surveyUrl: 'https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk'
+              builder: (context) => SurveyTool(
+                survey: widget.survey,
+                index: widget.index,
               )
             ));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              (!isSelected) 
+              (!widget.survey.isCompleted) 
                 ? const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.circle_outlined, size: 30, color: Colors.cyan),
@@ -74,7 +94,7 @@ class _CustomListTileState extends State<CustomListTile> {
                   padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.check_circle, size: 30, color: Colors.cyan),
                 ),
-              const Text('Survey 1', style: TextStyle(fontSize: 20)),
+              Text(widget.survey.name, style: const TextStyle(fontSize: 20)),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(Icons.navigate_next),
