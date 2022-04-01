@@ -60,7 +60,6 @@ class CustomListTile extends StatefulWidget {
 }
 
 class _CustomListTileState extends State<CustomListTile> {
-  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +74,14 @@ class _CustomListTileState extends State<CustomListTile> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => SurveyTool(
-                survey: widget.survey,
-                index: widget.index,
-              )
-            ));
+            if(!widget.survey.isCompleted){
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => SurveyTool(
+                  survey: widget.survey,
+                  index: widget.index,
+                )
+              ));
+            }
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

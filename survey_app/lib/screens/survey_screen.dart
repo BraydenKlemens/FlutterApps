@@ -39,6 +39,7 @@ class _SurveyToolState extends State<SurveyTool> {
           //This means the survey has finished and we can update the state
           if(currentPage == 'https://qemg.uoguelph.ca/thank-you/'){
             Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index);
+            Provider.of<AppProvider>(context, listen: false).addToCompleted(widget.survey);
           }
         },
       )
