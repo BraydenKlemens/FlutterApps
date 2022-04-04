@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../modals/survey.dart';
+import '../models/survey.dart';
 import '../providers/app_provider.dart';
 import 'survey_screen.dart';
 
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, appState, child) {
           var surveys = appState.surveys;
           if(surveys.isNotEmpty){
-            return ListView(
+            return ListView( //Make this a ListView.builder() so it only renders the surveys on screen
               children: [
                 for(int i = 0; i < surveys.length; i++)
                   CustomListTile(survey: surveys[i], index: i)
