@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/app_provider.dart';
+import 'providers/firebase_provider.dart';
 import 'screens/app_navigation.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AppProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FirebaseProvider(),
         ),
       ],
       child: MaterialApp(
