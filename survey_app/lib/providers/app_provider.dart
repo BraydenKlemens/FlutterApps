@@ -14,10 +14,10 @@ class AppProvider extends ChangeNotifier {
   final List<CompleteSurvey> completedSurveys = [];
   bool showAuth = false;
 
+  //Complete a survey
   void completeSurvey(int index, Survey survey){
     //update the surveys completion value
     surveys[index].isCompleted = true;
-
     //Add this survey to the completed list
     completedSurveys.add(
       CompleteSurvey(
@@ -30,11 +30,13 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Add a regular survey
   void addSurvey(Survey survey){
     surveys.add(survey);
     notifyListeners();
   }
 
+  //For authentication gate login / register page
   void changeAuth(){
     showAuth = !showAuth;
     notifyListeners();

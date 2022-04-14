@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AppProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AuthProvider(),
+          create: (context) => FirebaseProvider(),
         )
       ],
       child: MaterialApp(
