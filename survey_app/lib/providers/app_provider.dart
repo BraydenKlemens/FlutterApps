@@ -12,6 +12,7 @@ class AppProvider extends ChangeNotifier {
 
   final List<Survey> surveys = MySurveys.surveys;
   final List<CompleteSurvey> completedSurveys = [];
+  bool showAuth = false;
 
   void completeSurvey(int index, Survey survey){
     //update the surveys completion value
@@ -31,6 +32,11 @@ class AppProvider extends ChangeNotifier {
 
   void addSurvey(Survey survey){
     surveys.add(survey);
+    notifyListeners();
+  }
+
+  void changeAuth(){
+    showAuth = !showAuth;
     notifyListeners();
   }
 }

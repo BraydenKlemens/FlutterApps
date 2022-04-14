@@ -1,10 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:survey_app/firebase_options.dart';
+import 'package:survey_app/screens/auth_wrapper.dart';
 import 'providers/app_provider.dart';
-import 'providers/firebase_provider.dart';
-import 'screens/app_navigation.dart';
+import 'providers/auth_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 
@@ -19,8 +25,8 @@ class MyApp extends StatelessWidget {
           create: (context) => AppProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => FirebaseProvider(),
-        ),
+          create: (context) => AuthProvider(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(),
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,
         title: 'Survey Hub',
-        home: const AppNavigation()
+        home: const AuthenticationWraper() // can do the authentication right here
       ),
     );
   }

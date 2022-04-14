@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Consumer<AppProvider>(
-        builder: (context, appState, child) {
+        builder: (context, appState,_) {
           var surveys = appState.surveys;
           if(surveys.isNotEmpty){
             return ListView( //Make this a ListView.builder() so it only renders the surveys on screen

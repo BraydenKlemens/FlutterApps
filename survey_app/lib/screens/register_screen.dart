@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:survey_app/providers/app_provider.dart';
+import 'package:survey_app/providers/auth_provider.dart';
 
-import '../providers/auth_provider.dart';
+import '../providers/app_provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({ Key? key }) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({ Key? key }) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
 
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+  final namecontroller = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -33,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(height: 20),
                 const Text(
-                  'Welcome back, sign in to continue!',
+                  'Create Survey Hub Account',
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -43,6 +45,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: namecontroller,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.account_circle),
+                          hintText: 'Username',
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter name';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
                         controller: emailcontroller,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.email),
@@ -51,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter an email address to continue';
-                          }
+                          } 
                           return null;
                         },
                       ),
@@ -79,13 +94,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
                   ),
-                  child: const Text('Log In', style: TextStyle(fontSize: 20)),
+                  child: const Text('Register Account', style: TextStyle(fontSize: 20)),
                   onPressed: () {
                     if(formKey.currentState!.validate()){
                       Provider.of<AuthProvider>(context, listen: false)
-                        .signIn(
+                        .signUp(
                           email: emailcontroller.text.trim(),
                           password: passwordcontroller.text.trim(),
+                          name: namecontroller.text.trim()
                       );
                     }
                   }
@@ -93,22 +109,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 const Divider(thickness: 2.0),
                 const SizedBox(height: 20),
-                const Text('Dont have an account yet?'),
+                const Text('Already have an account?'),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
                   ),
-                  child: const Text('Sign Up', style: TextStyle(fontSize: 20)),
+                  child: const Text('Log In', style: TextStyle(fontSize: 20)),
                   onPressed: () {
                     Provider.of<AppProvider>(context, listen: false).changeAuth();
                   }
                 ),
-                const SizedBox(height: 200),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Forgot your password?')
-                )
               ],
             ),
           ),
