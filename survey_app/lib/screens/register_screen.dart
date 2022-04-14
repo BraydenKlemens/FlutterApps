@@ -20,6 +20,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    namecontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -97,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: const Text('Register Account', style: TextStyle(fontSize: 20)),
                   onPressed: () {
                     if(formKey.currentState!.validate()){
-                      Provider.of<AuthProvider>(context, listen: false)
+                      Provider.of<FirebaseProvider>(context, listen: false)
                         .signUp(
                           email: emailcontroller.text.trim(),
                           password: passwordcontroller.text.trim(),

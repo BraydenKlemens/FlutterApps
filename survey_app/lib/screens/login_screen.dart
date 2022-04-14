@@ -18,6 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -82,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('Log In', style: TextStyle(fontSize: 20)),
                   onPressed: () {
                     if(formKey.currentState!.validate()){
-                      Provider.of<AuthProvider>(context, listen: false)
+                      Provider.of<FirebaseProvider>(context, listen: false)
                         .signIn(
                           email: emailcontroller.text.trim(),
                           password: passwordcontroller.text.trim(),
@@ -93,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 const Divider(thickness: 2.0),
                 const SizedBox(height: 20),
-                const Text('Dont have an account yet?'),
+                const Text('Don\' have an account yet?'),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(

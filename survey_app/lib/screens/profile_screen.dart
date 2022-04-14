@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             onPressed: (){
-              Provider.of<AuthProvider>(context, listen: false).signOut();
+              Provider.of<FirebaseProvider>(context, listen: false).signOut();
             },
             icon: const Icon(Icons.logout)
           )
