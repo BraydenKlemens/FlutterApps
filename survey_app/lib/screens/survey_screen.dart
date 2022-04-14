@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../modals/survey.dart';
+import '../models/survey.dart';
 import '../providers/app_provider.dart';
 
 class SurveyTool extends StatefulWidget {
@@ -38,8 +38,7 @@ class _SurveyToolState extends State<SurveyTool> {
         onPageFinished: (String currentPage){
           //This means the survey has finished and we can update the state
           if(currentPage == 'https://qemg.uoguelph.ca/thank-you/'){
-            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index);
-            Provider.of<AppProvider>(context, listen: false).addToCompleted(widget.survey);
+            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index, widget.survey);
           }
         },
       )

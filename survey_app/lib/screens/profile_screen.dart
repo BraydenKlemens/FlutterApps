@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:survey_app/providers/auth_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.name}): super(key: key);
@@ -18,6 +20,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('My Profile', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25)),
         backgroundColor: const Color.fromARGB(255, 26, 25, 25),
+        actions: [
+          IconButton(
+            onPressed: (){
+              Provider.of<AuthProvider>(context, listen: false).signOut();
+            },
+            icon: const Icon(Icons.logout)
+          )
+        ],
       ),
       body: ListView(
         children: [
