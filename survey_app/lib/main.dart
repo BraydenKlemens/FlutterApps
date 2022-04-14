@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:survey_app/firebase_options.dart';
 import 'package:survey_app/screens/auth_wrapper.dart';
 import 'providers/app_provider.dart';
-import 'providers/auth_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +23,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => FirebaseProvider(),
-        )
       ],
       child: MaterialApp(
         theme: ThemeData(),

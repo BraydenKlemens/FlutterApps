@@ -5,7 +5,7 @@ import 'package:survey_app/providers/app_provider.dart';
 import 'package:survey_app/screens/login_screen.dart';
 import 'package:survey_app/screens/register_screen.dart';
 
-import '../providers/auth_provider.dart';
+import '../providers/app_provider.dart';
 import 'app_navigation.dart';
 
 class AuthenticationWraper extends StatelessWidget {
@@ -14,10 +14,9 @@ class AuthenticationWraper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: FirebaseAuth.instance.userChanges(),
       builder: (context, snapshot){
         if(snapshot.hasData){
-          Provider.of<FirebaseProvider>(context, listen: false).currentUser = FirebaseAuth.instance.currentUser;
           return const AppNavigation();
         }else{
           if (Provider.of<AppProvider>(context).showAuth == false){

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:survey_app/providers/auth_provider.dart';
+import 'package:survey_app/providers/app_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key, required this.name}): super(key: key);
@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             onPressed: (){
-              Provider.of<FirebaseProvider>(context, listen: false).signOut();
+              Provider.of<AppProvider>(context, listen: false).signOut();
             },
             icon: const Icon(Icons.logout)
           )
