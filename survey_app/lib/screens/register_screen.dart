@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:survey_app/providers/auth_provider.dart';
+import 'package:survey_app/providers/app_provider.dart';
 
 import '../providers/app_provider.dart';
 
@@ -18,6 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final namecontroller = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  String error = '';
 
   @override
   void dispose() {
@@ -25,6 +26,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordcontroller.dispose();
     namecontroller.dispose();
     super.dispose();
+  }
+
+  void handleErrors(String error){
+    if(error == 'weak-password'){
+      openErrorMessage(error + ': Password must be atleast 6 characters long');
+    }else if (error == 'invalid-email'){
+      openErrorMessage(error + ': Email must have a proper email format');
+    } else if (error == 'email-already-in-use'){
+      openErrorMessage(error + ': Try loging in or using a different email');
+    }else{
+      return;
+    }
   }
 
   @override
@@ -88,8 +101,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter a password to continue';
-                          } else if( value.length < 6){
-                            return 'Password must be atleast 6 charactes';
                           }
                           return null;
                         },
@@ -103,15 +114,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     minimumSize: const Size.fromHeight(50),
                   ),
                   child: const Text('Register Account', style: TextStyle(fontSize: 20)),
-                  onPressed: () {
+                  onPressed: () async {
                     if(formKey.currentState!.validate()){
-                      Provider.of<FirebaseProvider>(context, listen: false)
+                      await Provider.of<AppProvider>(context, listen: false)
                         .signUp(
                           email: emailcontroller.text.trim(),
                           password: passwordcontroller.text.trim(),
                           name: namecontroller.text.trim()
-                      );
+                      ).then((value) => error = value.toString());
                     }
+                    //Handle errors returned from auth
+                    handleErrors(error);
                   }
                 ),
                 const SizedBox(height: 20),
@@ -135,4 +148,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
+  Future openErrorMessage(String error) => showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Error:'),
+      content: Text(error),
+      actions: [
+        TextButton(
+          child: const Text('Close', style: TextStyle(fontSize: 18)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ]
+    ),
+  );
+
 }

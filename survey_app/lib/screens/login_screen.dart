@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:survey_app/providers/app_provider.dart';
 
-import '../providers/auth_provider.dart';
+import '../providers/app_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({ Key? key }) : super(key: key);
@@ -16,12 +16,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String error = '';
 
   @override
   void dispose() {
     emailcontroller.dispose();
     passwordcontroller.dispose();
     super.dispose();
+  }
+
+  void handleErrors(String error){
+    if(error == 'wrong-password'){
+      openErrorMessage(error + ': Try again');
+    }else if (error == 'invalid-email'){
+      openErrorMessage(error + ': Email must have a proper email format');
+    } else if (error == 'user-not-found'){
+      openErrorMessage(error);
+    } else if (error == 'user-disabled'){
+      openErrorMessage(error + ': Account has been disabled');
+    } else{
+      return;
+    }
   }
 
   @override
@@ -72,8 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Enter a password to continue';
-                          } else if( value.length < 6){
-                            return 'Password must be atleast 6 charactes';
                           }
                           return null;
                         },
@@ -87,14 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     minimumSize: const Size.fromHeight(50),
                   ),
                   child: const Text('Log In', style: TextStyle(fontSize: 20)),
-                  onPressed: () {
+                  onPressed: () async {
                     if(formKey.currentState!.validate()){
-                      Provider.of<FirebaseProvider>(context, listen: false)
+                      await Provider.of<AppProvider>(context, listen: false)
                         .signIn(
                           email: emailcontroller.text.trim(),
                           password: passwordcontroller.text.trim(),
-                      );
+                      ).then((value) => error = value.toString());
                     }
+                    //Handle errors returned from auth
+                    handleErrors(error);
                   }
                 ),
                 const SizedBox(height: 20),
@@ -123,4 +138,21 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  Future openErrorMessage(String error) => showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Error:'),
+      content: Text(error),
+      actions: [
+        TextButton(
+          child: const Text('Close', style: TextStyle(fontSize: 18)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ]
+    ),
+  );
+
 }
