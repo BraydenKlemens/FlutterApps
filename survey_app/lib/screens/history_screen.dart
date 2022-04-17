@@ -38,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ],
             );
           }else{
-            return const Center(child: Text('NO COMPLETIONS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
+            return const Center(child: Text('NO HISTORY', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
           }
         },
       )

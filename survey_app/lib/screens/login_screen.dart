@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Provider.of<AppProvider>(context, listen: false).changeAuth();
                   }
                 ),
-                const SizedBox(height: 200),
+                const SizedBox(height: 230),
                 TextButton(
                   onPressed: () {},
                   child: const Text('Forgot your password?')
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future openErrorMessage(String error) => showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Error:'),
+      title: const Text('Error'),
       content: Text(error),
       actions: [
         TextButton(

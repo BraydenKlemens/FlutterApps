@@ -18,6 +18,7 @@ class AppProvider extends ChangeNotifier {
   final List<Survey> surveys = MySurveys.surveys;
   final List<CompleteSurvey> completedSurveys = [];
   bool showAuth = false;
+  bool showCompleted = false;
 
   //Auth Functions ----------------------------------------------------------------------------------------
 
@@ -115,6 +116,15 @@ class AppProvider extends ChangeNotifier {
   void changeAuth(){
     showAuth = !showAuth;
     notifyListeners();
+  }
+
+  void showFilter(){
+    showCompleted = !showCompleted;
+    notifyListeners();
+  }
+
+  void loadUserData(){
+    
   }
 
 }

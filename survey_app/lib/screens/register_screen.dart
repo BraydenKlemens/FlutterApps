@@ -152,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future openErrorMessage(String error) => showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Error:'),
+      title: const Text('Error'),
       content: Text(error),
       actions: [
         TextButton(

@@ -5,15 +5,15 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../models/survey.dart';
 import '../providers/app_provider.dart';
 
-class SurveyTool extends StatefulWidget {
-  const SurveyTool({ Key? key, required this.survey, required this.index}) : super(key: key);
+class SurveyScreen extends StatefulWidget {
+  const SurveyScreen({ Key? key, required this.survey, required this.index}) : super(key: key);
   final Survey survey;
   final int index;
   @override
-  _SurveyToolState createState() => _SurveyToolState();
+  _SurveyScreenState createState() => _SurveyScreenState();
 }
 
-class _SurveyToolState extends State<SurveyTool> {
+class _SurveyScreenState extends State<SurveyScreen> {
   late WebViewController controller;
 
   @override
