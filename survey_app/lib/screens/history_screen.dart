@@ -20,7 +20,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
       body: Consumer<AppProvider>(
         builder: (context, appState, child) {
-          var completedsurveys = appState.completedSurveys;
+          var completedsurveys = appState.completeSurveys;
           if(completedsurveys.isNotEmpty){
             return ListView(
               children: [
@@ -29,7 +29,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
                       leading: const Icon(Icons.check_circle),
-                      title: Text(completedsurveys[i].name, style: const TextStyle(fontSize: 20)),
+                      title: Text(completedsurveys[i].title, style: const TextStyle(fontSize: 20)),
                       subtitle: Text(completedsurveys[i].date.toString().substring(0,19), style: const TextStyle(fontSize: 18)),
                       tileColor: Colors.blue,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))

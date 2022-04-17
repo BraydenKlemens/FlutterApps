@@ -13,7 +13,7 @@
  */
 
 import 'package:flutter/material.dart';
-import '../models/survey.dart';
+import 'package:survey_app/models/survey.dart';
 import '../screens/survey_screen.dart';
 
 class CompleteSurveyTile extends StatelessWidget {
@@ -37,14 +37,12 @@ class CompleteSurveyTile extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if(survey.isCompleted){
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => SurveyScreen(
-                  survey: survey,
-                  index: index,
-                )
-              ));
-            }
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => SurveyScreen(
+                survey: survey,
+                index: index,
+              )
+            ));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +51,7 @@ class CompleteSurveyTile extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.check_circle, size: 30, color: Colors.blue),
                 ),
-              Text(survey.name, style: const TextStyle(fontSize: 20)),
+              Text(survey.title, style: const TextStyle(fontSize: 20)),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(Icons.navigate_next),

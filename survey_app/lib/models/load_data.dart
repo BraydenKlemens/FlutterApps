@@ -1,3 +1,8 @@
+/*
+ * The format of the json for this file is strict and should be followed for the app to function properly 
+ * Instead, Surveys may be added using the firebase console
+ */
+
 class LoadData {
 
   static List userData = [
@@ -6,12 +11,16 @@ class LoadData {
       "user": "b@b.com",
       "surveys": [
         {
-          "name": "Energy Survey",
-          "Url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
+          "title": "Energy Survey",
+          "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
         },
         {
-          "name": "Colour Blindness",
-          "Url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
+          "title": "Colour Blindness",
+          "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
+        },
+        {
+          "title": "Screen Time",
+          "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
         }
       ]
     },
@@ -19,8 +28,8 @@ class LoadData {
       "user": "a@a.com",
       "surveys": [
         {
-          "name": "Fitness",
-          "Url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
+          "title": "Fitness",
+          "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
         }
       ]
     },
@@ -28,8 +37,8 @@ class LoadData {
       "user": "c@c.com",
       "surveys": [
         {
-          "name": "Screen Time",
-          "Url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
+          "title": "Screen Time",
+          "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
         }
       ]
     },

@@ -38,7 +38,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
         onPageFinished: (String currentPage){
           //This means the survey has finished and we can update the state
           if(currentPage == 'https://qemg.uoguelph.ca/thank-you/'){
-            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index, widget.survey);
+            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index);
           }
         },
       )

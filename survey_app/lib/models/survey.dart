@@ -1,13 +1,13 @@
 class Survey {
-  final String name;
+  final String title;
   final String url;
-  bool isCompleted;
+  final DateTime date;
   //Will have a datetime eventually
 
   Survey({
-    required this.name,
+    required this.title,
     required this.url,
-    required this.isCompleted,
+    required this.date,
   });
   
 }

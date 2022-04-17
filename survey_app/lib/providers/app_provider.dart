@@ -1,26 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:survey_app/models/load_data.dart';
 
-import '../models/complete_survey.dart';
-import '../models/my_surveys.dart';
 import '../models/survey.dart';
 
 
 class AppProvider extends ChangeNotifier {
 
-  //Auth vars
+  //AUTH VARS ----------------------------------------------------------------------------------------
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   bool signedIn = false;
   User? currentUser;
 
-  //App vars
-  final List<Survey> surveys = MySurveys.surveys;
-  final List<CompleteSurvey> completedSurveys = [];
+  //APP VARS ----------------------------------------------------------------------------------------
+  List<Survey> surveys = [];
+  List<Survey> completeSurveys = [];
   bool showAuth = false;
   bool showCompleted = false;
 
-  //Auth Functions ----------------------------------------------------------------------------------------
+  //FIRESTORE VARS ----------------------------------------------------------------------------------------
+  List userData = LoadData.userData;
+  List loadUserSurveys = [];
+
+
+  //AUTH FUNCTIONS ----------------------------------------------------------------------------------------
 
   //SIGN UP METHOD - all auth methods return strings for error handling
   Future<String?> signUp({required String email, required String password, required String name}) async {
@@ -32,7 +36,7 @@ class AppProvider extends ChangeNotifier {
         );
       await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
       currentUser = FirebaseAuth.instance.currentUser;
-      addUserToFireStore();
+      initUser();
       showAuth = false;
       return "Success";
     } on FirebaseAuthException catch (e) {
@@ -43,12 +47,15 @@ class AppProvider extends ChangeNotifier {
   //SIGN IN METHOD
   Future<String?> signIn({required String email, required String password}) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password
-      );
+      await firebaseAuth
+        .signInWithEmailAndPassword(
+          email: email,
+          password: password
+        );
       currentUser = FirebaseAuth.instance.currentUser;
       showAuth = false;
+      await getSurveys();
+      await getCompletedSurveys(); //completeSurveys list 
       return "Signed in!";
     } on FirebaseAuthException catch (e) {
       return e.code;
@@ -60,7 +67,7 @@ class AppProvider extends ChangeNotifier {
     await firebaseAuth.signOut();
   }
 
-  //Firestore Functions  ---------------------------------------------------------------
+  //FIRESTORE FUNCTIONS  -----------------------------------------------------------------------------
 
   //Create a user collection on firestore
   Future<void> addUserToFireStore() {
@@ -76,55 +83,107 @@ class AppProvider extends ChangeNotifier {
     });
   }
 
+  void initUser(){
+    addUserToFireStore();
+    getUserData();
+    loadUserData();
+  }
+
+  //get data from the all users array
+  void getUserData(){
+    for(var survey in userData){
+      if(survey['user'] == currentUser!.email){
+        loadUserSurveys = survey['surveys'];
+      }
+    }
+  }
+
+  //Gets the all the surveys the user should have from the json file
+  Future<void> loadUserData() async {
+    //save to the firestore
+    await FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .update({'surveys': loadUserSurveys})
+      .then((value) => loadUserSurveys = []);
+  }
+
+  //check for new surveys added to the users profile
+  Future<void> updateUserData() async {
+    getSurveys(); //surveys list
+    getCompletedSurveys(); //completeSurveys list 
+    getUserData(); //loadUserSurveys list
+  }
+
   //get all the surveys for a particular user
-  Future<void> getSurveys() async {}
+  Future<void> getSurveys() async {
+    return FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .get()
+      .then((value) {
+        for(var s in value['surveys']){
+          surveys.add(Survey(title: s['title'] as String, url: s['url'] as String, date: DateTime.now()));
+        }
+        notifyListeners();
+      });
+  }
 
   //Load all surveys complete for a user after signing in
-  Future<void> getCompletedSurveys() async {}
-
-  //update either list of surveys on firebase
-  Future<void> updateList(List<dynamic> list) async {}
-
-  //my_surveys may be the main location for surveys
-  Future<void> loadSurveysToFirebase() async {}
-
-
-  //REGULAR APP STATE MANAGMENT ---------------------------------------------
-
-  void completeSurvey(int index, Survey survey){
-    //update the surveys completion value
-    surveys[index].isCompleted = true;
-    //Add this survey to the completed list
-    completedSurveys.add(
-      CompleteSurvey(
-        name: survey.name, 
-        url: survey.url, 
-        isCompleted: survey.isCompleted, 
-        date: DateTime.now()
-      )
-    );
-    notifyListeners();
+  Future<void> getCompletedSurveys() async {
+    return FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .get()
+      .then((value) {
+        for(var s in value['surveyscomplete']){
+          completeSurveys.add(Survey(title: s['title'] as String, url: s['url'] as String, date: s['date'] as DateTime));
+        }
+        notifyListeners();
+      });
   }
 
-  //Add a regular survey
-  void addSurvey(Survey survey){
-    surveys.add(survey);
+  //Complete Survey
+  Future<void>completeSurvey(int index) async{
+    Survey s = surveys[index];
+    surveys.removeAt(index);
+    completeSurveys.add(Survey(title: s.title, url: s.url, date: DateTime.now()));
     notifyListeners();
+
+    //create map function here
+    FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .update({'surveys': mapFunc(surveys), 'surveyscomplete': mapFunc(completeSurveys)})
+      .then((value) => notifyListeners());
   }
 
-  //For authentication gate login / register page
+  List<dynamic> mapFunc(List list){
+    List newlist = [];
+    for(var s in list){
+      newlist.add({
+        'title': s.title,
+        'url': s.url,
+        'date': s.date
+      });
+    }
+    return newlist;
+  }
+
+  //REGULAR APP STATE MANAGMENT ----------------------------------------------------------------------
+
+  //Toggle authentication gate login / register page
   void changeAuth(){
     showAuth = !showAuth;
     notifyListeners();
   }
 
+  //Toggles the show completed surveys button
   void showFilter(){
     showCompleted = !showCompleted;
     notifyListeners();
   }
 
-  void loadUserData(){
-    
-  }
+  //get competed Surveys
 
 }

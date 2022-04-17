@@ -22,7 +22,6 @@ class SurveyTile extends StatelessWidget {
   final int index;
   final Survey survey;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,23 +35,21 @@ class SurveyTile extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if(survey.isCompleted){
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => SurveyScreen(
-                  survey: survey,
-                  index: index,
-                )
-              ));
-            }
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => SurveyScreen(
+                survey: survey,
+                index: index,
+              )
+            ));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.check_circle, size: 30, color: Colors.blue),
+                  child: Icon(Icons.circle_outlined, size: 30, color: Colors.blue),
                 ),
-              Text(survey.name, style: const TextStyle(fontSize: 20)),
+              Text(survey.title, style: const TextStyle(fontSize: 20)),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(Icons.navigate_next),
