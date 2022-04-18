@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:survey_app/providers/app_provider.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key, required this.name}): super(key: key);
-  final String name;
+class ProfileScreen extends StatelessWidget {
 
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   final double backDropHeight = 150;
   final double profileHeight = 144;
 
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25)),
@@ -40,17 +36,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   //everything below the profile picture
   Widget buildBottom() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(widget.name, style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-        ),
-        //EVERYTHING TO THE PROFILE GETS ADDED HERE
-        const SizedBox(height: 30),
-        const Text('- Alarms / Reminders\n\n- Delete Account\n\n- Logout', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))
-
-      ],
+    return Consumer<AppProvider>(
+      builder: (context, appState,_) {
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(appState.name != null ? appState.name! : "Profile", style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            ),
+            //EVERYTHING TO THE PROFILE GETS ADDED HERE
+            const SizedBox(height: 30),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Divider(thickness: 2),
+            ),
+            const Text('Account Settings',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+            const SizedBox(height: 30),
+            OutlinedButton(
+              onPressed: () => openDeleteMessage(context, appState),
+              child: const Text('Delete Account', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
+            )
+          ],
+        );
+      }
     );
   }
 
@@ -92,4 +100,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ]
     );
   }
+
+  Future openDeleteMessage(BuildContext context, AppProvider appState) => showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Delete Account'),
+      content:const Text('Are you sure you want to delete your account?'),
+      actions: [
+        TextButton(
+          child: const Text('Confirm', style: TextStyle(fontSize: 18)),
+          onPressed: () {
+            Navigator.of(context).pop();
+            appState.deleteAccout();
+          },
+        )
+      ]
+    ),
+  );
+
 }

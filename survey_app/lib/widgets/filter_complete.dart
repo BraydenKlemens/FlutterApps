@@ -10,28 +10,18 @@ class FilterComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Filter widget tree
-    return UnconstrainedBox(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        height: 60,
-        width: 200,
-        padding: const EdgeInsets.all(5),
-        child: InkWell(
-          onTap: () => Provider.of<AppProvider>(context, listen: false).showFilter(),
-          child: Card(
-            color: Colors.blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              children:[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(18,0,0,0),
-                  child: Icon((showCompleted) ? Icons.expand_more : Icons.chevron_right),
-                ),
-                const Text('Completed', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              ],
-            ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      child: UnconstrainedBox(
+        alignment: Alignment.centerLeft,
+        child: OutlinedButton(
+          onPressed: () => Provider.of<AppProvider>(context, listen: false).showFilter(),
+          child: Row(
+            children:[
+              Icon((showCompleted) ? Icons.expand_more : Icons.chevron_right),
+              const Text('Completed', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              const SizedBox(width: 10),
+            ],
           ),
         )
       ),

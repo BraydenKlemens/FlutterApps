@@ -14,9 +14,9 @@ class _AppNavigationState extends State<AppNavigation> {
 
   List<Widget> screens = <Widget>[
     //screen objects placed here
-    const ProfileScreen(name: 'Brayden'),
+    const ProfileScreen(),
     const HomeScreen(),
-    const HistoryScreen()
+    const HistoryScreen() 
   ];
 
   @override

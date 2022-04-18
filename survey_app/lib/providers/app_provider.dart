@@ -12,16 +12,18 @@ class AppProvider extends ChangeNotifier {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   bool signedIn = false;
   User? currentUser;
+  String? get name => currentUser?.displayName;
 
   //APP VARS ----------------------------------------------------------------------------------------
-  List<Survey> surveys = [];
-  List<Survey> completeSurveys = [];
   bool showAuth = false;
   bool showCompleted = false;
 
   //FIRESTORE VARS ----------------------------------------------------------------------------------------
   List userData = LoadData.userData;
   List loadUserSurveys = [];
+  List<Survey> surveys = [];
+  List<Survey> completeSurveys = [];
+  List<Survey> history = [];
 
 
   //AUTH FUNCTIONS ----------------------------------------------------------------------------------------
@@ -55,7 +57,7 @@ class AppProvider extends ChangeNotifier {
       currentUser = FirebaseAuth.instance.currentUser;
       showAuth = false;
       await getSurveys();
-      await getCompletedSurveys(); //completeSurveys list 
+      await getCompletedSurveys();
       return "Signed in!";
     } on FirebaseAuthException catch (e) {
       return e.code;
@@ -64,7 +66,20 @@ class AppProvider extends ChangeNotifier {
   
   //SIGN OUT METHOD
   Future<void> signOut() async {
+    //clear lists and log out
+    loadUserSurveys = [];
+    surveys = [];
+    completeSurveys = [];
+    history = [];
     await firebaseAuth.signOut();
+  }
+
+  Future<void> deleteAccout() async {
+    await FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .delete();
+    await FirebaseAuth.instance.currentUser!.delete();
   }
 
   //FIRESTORE FUNCTIONS  -----------------------------------------------------------------------------
@@ -80,6 +95,7 @@ class AppProvider extends ChangeNotifier {
         'uid': currentUser!.uid,
         'surveys': [],
         'surveyscomplete': [],
+        'allsurveys': [],
     });
   }
 
@@ -87,13 +103,15 @@ class AppProvider extends ChangeNotifier {
     addUserToFireStore();
     getUserData();
     loadUserData();
+    getSurveys();
+    getCompletedSurveys();
   }
 
   //get data from the all users array
   void getUserData(){
-    for(var survey in userData){
-      if(survey['user'] == currentUser!.email){
-        loadUserSurveys = survey['surveys'];
+    for(var i in userData){
+      if(i['user'] == currentUser!.email){
+        loadUserSurveys = i['surveys'];
       }
     }
   }
@@ -104,15 +122,16 @@ class AppProvider extends ChangeNotifier {
     await FirebaseFirestore.instance
       .collection('users')
       .doc(currentUser!.email)
-      .update({'surveys': loadUserSurveys})
+      .update({'surveys': loadUserSurveys, 'allsurveys': loadUserSurveys})
       .then((value) => loadUserSurveys = []);
   }
 
   //check for new surveys added to the users profile
   Future<void> updateUserData() async {
-    getSurveys(); //surveys list
-    getCompletedSurveys(); //completeSurveys list 
-    getUserData(); //loadUserSurveys list
+    surveys = [];
+    completeSurveys = [];
+    await getSurveys();
+    await getCompletedSurveys();
   }
 
   //get all the surveys for a particular user
@@ -137,37 +156,28 @@ class AppProvider extends ChangeNotifier {
       .get()
       .then((value) {
         for(var s in value['surveyscomplete']){
-          completeSurveys.add(Survey(title: s['title'] as String, url: s['url'] as String, date: s['date'] as DateTime));
+          completeSurveys.add(Survey(title: s['title'] as String, url: s['url'] as String, date: DateTime.now()));
         }
         notifyListeners();
       });
   }
 
   //Complete Survey
-  Future<void>completeSurvey(int index) async{
-    Survey s = surveys[index];
-    surveys.removeAt(index);
-    completeSurveys.add(Survey(title: s.title, url: s.url, date: DateTime.now()));
+  Future<void>completeSurvey(int index, Survey s) async{ 
+    surveys.removeWhere((element) => element == s);
+    if(!completeSurveys.contains(s)) {
+      completeSurveys.add(Survey(title: s.title, url: s.url, date: DateTime.now()));
+    }
+    history.add(Survey(title: s.title, url: s.url, date: DateTime.now()));
+    //add a logging history list
     notifyListeners();
 
     //create map function here
     FirebaseFirestore.instance
       .collection('users')
       .doc(currentUser!.email)
-      .update({'surveys': mapFunc(surveys), 'surveyscomplete': mapFunc(completeSurveys)})
+      .update({'surveys': toMap(surveys), 'surveyscomplete': toMap(completeSurveys)})
       .then((value) => notifyListeners());
-  }
-
-  List<dynamic> mapFunc(List list){
-    List newlist = [];
-    for(var s in list){
-      newlist.add({
-        'title': s.title,
-        'url': s.url,
-        'date': s.date
-      });
-    }
-    return newlist;
   }
 
   //REGULAR APP STATE MANAGMENT ----------------------------------------------------------------------
@@ -184,6 +194,16 @@ class AppProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //get competed Surveys
+  List<dynamic> toMap(List list){
+    List newlist = [];
+    for(var s in list){
+      newlist.add({
+        'title': s.title,
+        'url': s.url,
+        'date': s.date
+      });
+    }
+    return newlist;
+  }
 
 }

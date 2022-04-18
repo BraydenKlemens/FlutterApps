@@ -8,18 +8,23 @@ import '../providers/app_provider.dart';
 class HomeScreen extends StatelessWidget{
   const HomeScreen({ Key? key }) : super(key: key);
 
+  /// todo - Daily Notifications
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Surveys', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25)),
         backgroundColor: const Color.fromARGB(255, 26, 25, 25),
+        actions: [
+          IconButton(onPressed:() => Provider.of<AppProvider>(context, listen:false).updateUserData(), icon: const Icon(Icons.refresh))
+        ],
       ),
       body: Consumer<AppProvider>(
         builder: (context, appState,_) {
           var surveys = appState.surveys;
           var completed = appState.completeSurveys;
-          if(surveys.isNotEmpty){
+          if(surveys.isNotEmpty || completed.isNotEmpty){
             return ListView( //Make this a ListView.builder() so it only renders the surveys on screen
               children: [
                 //incomplete surveys
@@ -34,7 +39,7 @@ class HomeScreen extends StatelessWidget{
                   for(int i = 0; i < completed.length; i++)
                     Visibility(
                       visible: appState.showCompleted,
-                      child: CompleteSurveyTile(survey: completed[i],index: i)
+                      child: CompleteSurveyTile(survey: completed[i], index: i)
                     ),
                 if (completed.isEmpty && appState.showCompleted)
                   const Padding(

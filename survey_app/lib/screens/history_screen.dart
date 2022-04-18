@@ -20,10 +20,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ),
       body: Consumer<AppProvider>(
         builder: (context, appState, child) {
-          var completedsurveys = appState.completeSurveys;
+          var completedsurveys = appState.history;
           if(completedsurveys.isNotEmpty){
             return ListView(
               children: [
+                const SizedBox(height: 3),
                 for(int i = 0; i < completedsurveys.length; i++)
                   Padding(
                     padding: const EdgeInsets.all(8.0),

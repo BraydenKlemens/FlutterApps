@@ -20,7 +20,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UofG Survey Tool', style: TextStyle(fontSize: 20)),
+        title: Text(widget.survey.title, style: const TextStyle(fontSize: 20)),
         backgroundColor: const Color.fromARGB(255, 26, 25, 25),
         actions: [
           IconButton(
@@ -38,7 +38,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
         onPageFinished: (String currentPage){
           //This means the survey has finished and we can update the state
           if(currentPage == 'https://qemg.uoguelph.ca/thank-you/'){
-            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index);
+            Provider.of<AppProvider>(context, listen: false).completeSurvey(widget.index, widget.survey);
           }
         },
       )

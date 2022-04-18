@@ -30,7 +30,6 @@ class CompleteSurveyTile extends StatelessWidget {
       height: 100,
       padding: const EdgeInsets.all(5.0),
       child: Card(
-        elevation: 5,
         color: Colors.grey[700],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
