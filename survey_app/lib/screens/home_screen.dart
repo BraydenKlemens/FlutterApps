@@ -8,8 +8,6 @@ import '../providers/app_provider.dart';
 class HomeScreen extends StatelessWidget{
   const HomeScreen({ Key? key }) : super(key: key);
 
-  /// todo - Daily Notifications
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

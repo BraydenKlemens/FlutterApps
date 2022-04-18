@@ -22,10 +22,6 @@ class LoadData {
           "title": "Screen Time",
           "url": "https://uoguelph.eu.qualtrics.com/jfe/form/SV_0dYKo3NuYi1oVpk"
         },
-         {
-          "title": "blbopbjniue",
-          "url": "https://uoguelph.eu.quas.com/jfe/form/SV_0dYKo3NuYi1oVpk"
-        },
       ]
     },
     {
