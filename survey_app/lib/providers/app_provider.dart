@@ -75,6 +75,7 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<void> deleteAccout() async {
+    await addDeletedUserToFireStore();
     await FirebaseFirestore.instance
       .collection('users')
       .doc(currentUser!.email)
@@ -96,6 +97,18 @@ class AppProvider extends ChangeNotifier {
         'surveys': [],
         'surveyscomplete': [],
         'allsurveys': [],
+    });
+  }
+
+  Future<void> addDeletedUserToFireStore() {
+    return FirebaseFirestore.instance
+      .collection('deletedusers')
+      .doc(currentUser!.email)
+      .set(<String, dynamic>{
+        'name': currentUser!.displayName,
+        'email': currentUser!.email,
+        'uid': currentUser!.uid,
+        'deletionTime': DateTime.now()
     });
   }
 
@@ -197,11 +210,7 @@ class AppProvider extends ChangeNotifier {
   List<dynamic> toMap(List list){
     List newlist = [];
     for(var s in list){
-      newlist.add({
-        'title': s.title,
-        'url': s.url,
-        'date': s.date
-      });
+      newlist.add(s.dictdata);
     }
     return newlist;
   }

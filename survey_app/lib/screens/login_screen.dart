@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 const Divider(thickness: 2.0),
                 const SizedBox(height: 20),
-                const Text('Don\' have an account yet?'),
+                const Text('Don\'t have an account yet?'),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
