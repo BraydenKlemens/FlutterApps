@@ -8,7 +8,7 @@ class LoadData {
   static List userData = [
 
     {
-      "user": "bklemens@uoguelph.ca",
+      "user": "b@b.com",
       "surveys": [
         {
           "title": "Energy Survey",
