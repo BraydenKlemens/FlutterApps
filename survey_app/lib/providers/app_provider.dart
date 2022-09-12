@@ -58,6 +58,7 @@ class AppProvider extends ChangeNotifier {
       showAuth = false;
       await getSurveys();
       await getCompletedSurveys();
+      await getHistory();
       return "Signed in!";
     } on FirebaseAuthException catch (e) {
       return e.code;
@@ -97,6 +98,7 @@ class AppProvider extends ChangeNotifier {
         'surveys': [],
         'surveyscomplete': [],
         'allsurveys': [],
+        'history': [],
     });
   }
 
@@ -117,7 +119,6 @@ class AppProvider extends ChangeNotifier {
     getUserData();
     loadUserData();
     getSurveys();
-    getCompletedSurveys();
   }
 
   //get data from the all users array
@@ -175,6 +176,19 @@ class AppProvider extends ChangeNotifier {
       });
   }
 
+  Future<void> getHistory() async {
+    return FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentUser!.email)
+      .get()
+      .then((value) {
+        for(var s in value['history']){
+          history.add(Survey(title: s['title'] as String, url: s['url'] as String, date: DateTime.now()));
+        }
+        notifyListeners();
+      });
+  }
+
   //Complete Survey
   Future<void>completeSurvey(int index, Survey s) async{ 
     surveys.removeWhere((element) => element == s);
@@ -189,7 +203,7 @@ class AppProvider extends ChangeNotifier {
     FirebaseFirestore.instance
       .collection('users')
       .doc(currentUser!.email)
-      .update({'surveys': toMap(surveys), 'surveyscomplete': toMap(completeSurveys)})
+      .update({'surveys': toMap(surveys), 'surveyscomplete': toMap(completeSurveys), 'history': toMap(history)})
       .then((value) => notifyListeners());
   }
 

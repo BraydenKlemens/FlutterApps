@@ -95,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         CircleAvatar(
           radius: profileHeight / 2,
-          backgroundImage: const NetworkImage('https://pbs.twimg.com/profile_images/1440296485468266496/N2_A0b0p_400x400.jpg'),
+          backgroundImage: const NetworkImage('https://eventcaddy.s3.amazonaws.com/uploads/tournament_website/logo/29/5c2de998-953c-4dc4-83ad-54a00169796d.png'),
         ),
       ]
     );
