@@ -11,11 +11,7 @@ Users have the ability to create accounts with University of Guelph emails. Each
 ![Screen Shot 2022-04-19 at 3 18 39 AM](https://user-images.githubusercontent.com/40216205/193905955-1df80bd9-2c65-445f-ba4f-ec1d9f29cf98.png)
 <img width="308" alt="history" src="https://user-images.githubusercontent.com/40216205/193906079-dbf630a6-91c4-491e-99eb-37c69e246ae4.png">
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-To Build:
+## Build Instructions
 
 - Run XCode or Android Studio emulator
 - locate to survey_app
