@@ -15,7 +15,7 @@ class _FavRecipeState extends State<FavRecipe> {
       appBar: AppBar(
         title: const Text('Lab 5 Part B - Brayden Klemens'),
       ),
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
       body:const Center(
         child: Text('Favourite Recipes')
       )

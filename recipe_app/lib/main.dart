@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Lab Four',
+      title: 'Recipe App',
       debugShowCheckedModeBanner: false,
       home: HomeScreen()
     );
@@ -39,9 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lab Five Part B - Brayden Klemens'),
+        title: const Text('Recipe App'),
       ),
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
 
       body: SafeArea(
         child: GridView.count(
