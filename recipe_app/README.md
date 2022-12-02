@@ -14,4 +14,5 @@ This is a simple Flutter application that displays different recipes that users 
 - Type: flutter run
 
 ## App Pictures
-![app1](https://user-images.githubusercontent.com/40216205/205395436-521ef84e-8e55-42f1-b669-f111f51e47b4.png)
+![app1](https://user-images.githubusercontent.com/40216205/205395543-d2457c76-c314-4c9e-a9b2-6c2a53860e1d.png)
+
