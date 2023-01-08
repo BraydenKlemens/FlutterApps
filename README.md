@@ -8,6 +8,6 @@ This is a basic application to view common attractions around guelph. Users can 
 
 ## Recipe App
 
-This is a basic application to look at recipes. Users can look recipes and favorite them.
+This is a simple application to look at recipes. Users can look recipes and favorite them.
 
 
