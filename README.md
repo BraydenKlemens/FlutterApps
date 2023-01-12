@@ -4,7 +4,7 @@ This repository contains two beginner flutter applications, mainly focused on ba
 
 ## Attractions App
 
-This is a basic application to view common attractions around guelph. Users can look at attractions and schedule them.
+This is a simple application to view common attractions around guelph. Users can look at attractions and schedule them.
 
 ## Recipe App
 
